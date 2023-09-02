@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Provider = () => {
-  return (
-    <div>Provider</div>
-  )
-}
+const Provider = ({ children, session }) => (
+  <SessionProvider session={session}>
+    {children}
+  </SessionProvider>
+)
 
 export default Provider
