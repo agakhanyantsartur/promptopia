@@ -14,7 +14,18 @@ export const GET = async (request, { params }) => {
         return new Response("Internal Server Error", { status: 500 });
     }
 }
+export const DELETE = async (request, { params }) => {
+    try {
+        await connectToDB();
 
+        // Find the prompt by ID and remove it
+        await Prompt.findByIdAndRemove(params.id);
+
+        return new Response("Prompt deleted successfully", { status: 200 });
+    } catch (error) {
+        return new Response("Error deleting prompt", { status: 500 });
+    }
+};
 export const PATCH = async (request, { params }) => {
     const { prompt, tag } = await request.json();
 
@@ -40,15 +51,3 @@ export const PATCH = async (request, { params }) => {
     }
 };
 
-export const DELETE = async (request, { params }) => {
-    try {
-        await connectToDB();
-
-        // Find the prompt by ID and remove it
-        await Prompt.findByIdAndRemove(params.id);
-
-        return new Response("Prompt deleted successfully", { status: 200 });
-    } catch (error) {
-        return new Response("Error deleting prompt", { status: 500 });
-    }
-};
